@@ -133,6 +133,30 @@ func TestReplace(t *testing.T) {
 	tupleValueIsId(t, respSel.Data, id)
 }
 
+type marshalComplexTuple struct {
+	UUID uuid.UUID
+	Name string
+}
+
+func TestMarshalComplex(t *testing.T) {
+	space := marshalComplexTuple{UUID: uuid.New(), Name: "foo bar"}
+
+	b, err := marshal(&space)
+	if err != nil {
+		t.Fatalf("Unable to marshal: %s", err)
+	}
+
+	var item marshalComplexTuple
+	err = unmarshal(b, &item)
+	if err != nil {
+		t.Fatalf("Unable to unmarshal: %s", err)
+	}
+
+	if item.Name != space.Name {
+		t.Fatalf("names is not equal: %s != %s", space.Name, item.Name)
+	}
+}
+
 // runTestMain is a body of TestMain function
 // (see https://pkg.go.dev/testing#hdr-Main).
 // Using defer + os.Exit is not works so TestMain body
