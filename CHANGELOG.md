@@ -18,6 +18,10 @@ Versioning](http://semver.org/spec/v2.0.0.html) except to the first release.
 
 ### Changed
 
+### Removed
+
+- multi subpackage (#240)
+
 ### Fixed
 
 - Decimal package uses a test variable DecimalPrecision instead of a

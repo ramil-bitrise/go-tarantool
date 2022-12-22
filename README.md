@@ -27,6 +27,7 @@ faster than other packages according to public benchmarks.
   * [API reference](#api-reference)
   * [Walking\-through example](#walking-through-example)
   * [Migration to v2](#migration-to-v2)
+    * [multi removed](#multi-subpackage)
     * [msgpack.v5 migration](#msgpackv5-migration)
 * [Contributing](#contributing)
 * [Alternative connectors](#alternative-connectors)
@@ -157,6 +158,10 @@ There are two parameters:
 ### Migration to v2
 
 The article describes migration from go-tarantool to go-tarantool/v2.
+
+#### multi subpackage
+
+The subpackage has been deleted. You could use `connection_pool` instead.
 
 #### msgpack.v5 migration
 
