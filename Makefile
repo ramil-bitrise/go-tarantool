@@ -44,11 +44,11 @@ test:
 testdata:
 	(cd ./testdata; ./generate.sh)
 
-.PHONY: test-connection-pool
-test-connection-pool:
-	@echo "Running tests in connection_pool package"
+.PHONY: test-pool
+test-pool:
+	@echo "Running tests in pool package"
 	go clean -testcache
-	go test -tags "$(TAGS)" ./connection_pool/ -v -p 1
+	go test -tags "$(TAGS)" ./pool/ -v -p 1
 
 .PHONY: test-datetime
 test-datetime:

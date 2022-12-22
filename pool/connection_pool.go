@@ -8,7 +8,7 @@
 // - Automatic master discovery by mode parameter.
 //
 // Since: 1.6.0
-package connection_pool
+package pool
 
 import (
 	"errors"
