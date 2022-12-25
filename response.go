@@ -2,6 +2,8 @@ package tarantool
 
 import (
 	"fmt"
+
+	"github.com/vmihailenco/msgpack/v5"
 )
 
 type Response struct {
@@ -29,7 +31,7 @@ type SQLInfo struct {
 	InfoAutoincrementIds []uint64
 }
 
-func (meta *ColumnMetaData) DecodeMsgpack(d *decoder) error {
+func (meta *ColumnMetaData) DecodeMsgpack(d *msgpack.Decoder) error {
 	var err error
 	var l int
 	if l, err = d.DecodeMapLen(); err != nil {
@@ -67,7 +69,7 @@ func (meta *ColumnMetaData) DecodeMsgpack(d *decoder) error {
 	return nil
 }
 
-func (info *SQLInfo) DecodeMsgpack(d *decoder) error {
+func (info *SQLInfo) DecodeMsgpack(d *msgpack.Decoder) error {
 	var err error
 	var l int
 	if l, err = d.DecodeMapLen(); err != nil {
@@ -97,7 +99,7 @@ func (info *SQLInfo) DecodeMsgpack(d *decoder) error {
 	return nil
 }
 
-func (resp *Response) smallInt(d *decoder) (i int, err error) {
+func (resp *Response) smallInt(d *msgpack.Decoder) (i int, err error) {
 	b, err := resp.buf.ReadByte()
 	if err != nil {
 		return
@@ -109,7 +111,7 @@ func (resp *Response) smallInt(d *decoder) (i int, err error) {
 	return d.DecodeInt()
 }
 
-func (resp *Response) decodeHeader(d *decoder) (err error) {
+func (resp *Response) decodeHeader(d *msgpack.Decoder) (err error) {
 	var l int
 	d.Reset(&resp.buf)
 	if l, err = d.DecodeMapLen(); err != nil {
@@ -153,7 +155,10 @@ func (resp *Response) decodeBody() (err error) {
 		var feature ProtocolFeature
 		var errorExtendedInfo *BoxError = nil
 
-		d := newDecoder(&resp.buf)
+		d := msgpack.NewDecoder(&resp.buf)
+		d.SetMapDecoder(func(dec *msgpack.Decoder) (interface{}, error) {
+			return dec.DecodeUntypedMap()
+		})
 
 		if l, err = d.DecodeMapLen(); err != nil {
 			return err
@@ -255,7 +260,12 @@ func (resp *Response) decodeBodyTyped(res interface{}) (err error) {
 		var errorExtendedInfo *BoxError = nil
 
 		var l int
-		d := newDecoder(&resp.buf)
+
+		d := msgpack.NewDecoder(&resp.buf)
+		d.SetMapDecoder(func(dec *msgpack.Decoder) (interface{}, error) {
+			return dec.DecodeUntypedMap()
+		})
+
 		if l, err = d.DecodeMapLen(); err != nil {
 			return err
 		}

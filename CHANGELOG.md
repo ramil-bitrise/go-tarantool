@@ -19,10 +19,12 @@ Versioning](http://semver.org/spec/v2.0.0.html) except to the first release.
 ### Changed
 
 - connection_pool renamed to pool (#239)
+- msgpack/v5 is default at now (#236)
 
 ### Removed
 
 - multi subpackage (#240)
+- msgpack.v2 support (#236)
 
 ### Fixed
 
