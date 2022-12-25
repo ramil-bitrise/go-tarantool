@@ -1,3 +1,8 @@
+# Work in progress. Please, don't try to use it.
+
+This branch will become v2 in the future, but now it is possible rebases,
+force-pushes etc.
+
 <a href="http://tarantool.org">
 	<img src="https://avatars2.githubusercontent.com/u/2344919?v=2&s=250" align="right">
 </a>
