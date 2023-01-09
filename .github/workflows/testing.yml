@@ -71,16 +71,24 @@ jobs:
         run: make deps
 
       - name: Run regression tests
-        run: make test
+        run: |
+          make test
+          make testrace
 
       - name: Run regression tests with call_17
-        run: make test TAGS="go_tarantool_call_17"
+        run: |
+          make test TAGS="go_tarantool_call_17"
+          make testrace TAGS="go_tarantool_call_17"
 
       - name: Run regression tests with msgpack.v5
-        run: make test TAGS="go_tarantool_msgpack_v5"
+        run: |
+          make test TAGS="go_tarantool_msgpack_v5"
+          make testrace TAGS="go_tarantool_msgpack_v5"
 
       - name: Run regression tests with msgpack.v5 and call_17
-        run: make test TAGS="go_tarantool_msgpack_v5,go_tarantool_call_17"
+        run: |
+          make test TAGS="go_tarantool_msgpack_v5,go_tarantool_call_17"
+          make testrace TAGS="go_tarantool_msgpack_v5,go_tarantool_call_17"
 
       - name: Run fuzzing tests
         if: ${{ matrix.fuzzing }}
@@ -163,6 +171,7 @@ jobs:
         run: |
           source tarantool-enterprise/env.sh
           make test
+          make testrace
         env:
           TEST_TNT_SSL: ${{matrix.ssl}}
 
@@ -170,6 +179,7 @@ jobs:
         run: |
           source tarantool-enterprise/env.sh
           make test TAGS="go_tarantool_call_17"
+          make testrace TAGS="go_tarantool_call_17"
         env:
           TEST_TNT_SSL: ${{matrix.ssl}}
 
@@ -177,6 +187,7 @@ jobs:
         run: |
           source tarantool-enterprise/env.sh
           make test TAGS="go_tarantool_msgpack_v5"
+          make testrace TAGS="go_tarantool_msgpack_v5"
         env:
           TEST_TNT_SSL: ${{matrix.ssl}}
 
@@ -184,6 +195,7 @@ jobs:
         run: |
           source tarantool-enterprise/env.sh
           make test TAGS="go_tarantool_msgpack_v5,go_tarantool_call_17"
+          make testrace TAGS="go_tarantool_msgpack_v5,go_tarantool_call_17"
         env:
           TEST_TNT_SSL: ${{matrix.ssl}}
 

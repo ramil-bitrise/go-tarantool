@@ -10,9 +10,13 @@ Versioning](http://semver.org/spec/v2.0.0.html) except to the first release.
 
 ### Added
 
+- A Makefile target to test with race detector (#218)
+
 ### Changed
 
 ### Fixed
+
+- Several non-critical data race issues (#218)
 
 ## [1.10.0] - 2022-12-31
 
